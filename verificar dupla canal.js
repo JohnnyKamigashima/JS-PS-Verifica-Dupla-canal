@@ -3,14 +3,20 @@
 
 var docRef = app.activeDocument,
     Ncanais = docRef.channels.length;
-    allChannelsInvisible();
+    allChannelsInvisible()
+    brancoNome = "";
 
   for (var primeiroCanal = 0; primeiroCanal < Ncanais; primeiroCanal++) {
     var upperPrimeiro = docRef.channels[primeiroCanal].name.toUpperCase(),
         primeiroRef = docRef.channels[primeiroCanal];
+        if(upperPrimeiro.indexOf("WHITE") != -1 || upperPrimeiro.indexOf("BRANCO") != -1 || upperPrimeiro.indexOf("BLANCO") != -1){
+            var brancoNome = primeiroRef.name;
+            changeColor(brancoNome,0,20,0,0,0);
+        }
 
         if(upperPrimeiro.indexOf("SUBSTRATO") == -1 && upperPrimeiro.indexOf("TECH") == -1 && upperPrimeiro.indexOf("DIE") == -1 &&upperPrimeiro.indexOf("REGUA") == -1 && upperPrimeiro.indexOf("COLOR") == -1 &&upperPrimeiro.indexOf("VARNISH") == -1 ){
             primeiroRef.visible = true;
+            
             if(primeiroCanal!=0 && primeiroRef.visible == true){
                 docRef.channels[primeiroCanal-1].visible = false;
             }
@@ -35,7 +41,12 @@ var docRef = app.activeDocument,
             primeiroRef.visible = false;
         }
     }
+    if (brancoNome != ""){
+        changeColor(brancoNome,0,0,0,0,90);
+    }
+    
 }
+
 allChannelsVisible();
 
 function changeColor(channelName, cyan, magenta, yellow, black, opacity) {
